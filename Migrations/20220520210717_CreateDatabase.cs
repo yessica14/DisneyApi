@@ -49,7 +49,7 @@ namespace Alkemy.Disney.Api.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Validation = table.Column<bool>(type: "bit", nullable: false)
+                    Sal = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

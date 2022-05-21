@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alkemy.Disney.Api.Migrations
 {
     [DbContext(typeof(MVCContext))]
-    [Migration("20220520161849_CreateDatabase")]
+    [Migration("20220520210717_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,11 +112,11 @@ namespace Alkemy.Disney.Api.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Sal")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Validation")
-                        .HasColumnType("bit");
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
