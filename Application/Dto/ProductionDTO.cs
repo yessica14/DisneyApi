@@ -14,8 +14,10 @@ namespace Alkemy.Disney.Api.Application.Dto
 
         public string Title { get; set; }
         public DateTime CreationDate { get; set; }
-        public Qualification qualification { get; set; }
-        public TypeProduction TypeProduction { get; set; }
-       
+        public int Qualification { get; set; }
+        public string TypeProduction { get; set; }
+        public ICollection<GenderDTO> Genders { get; set; }
+        public ICollection<PersonageDTO> Personages { get; set; }
+
     }
 }
