@@ -39,7 +39,6 @@ namespace Alkemy.Disney.Api.Controller
         //    return Ok(productions);
         //}
 
-
         [HttpGet("movies/{Name}")]
         [Authorize]
 
@@ -60,6 +59,10 @@ namespace Alkemy.Disney.Api.Controller
         public async Task<IActionResult> GetGenero(string genre)
         {
             var production = _productionService.GetMovieByGender(genre);
+            if (production == null)
+            {
+                return NotFound();
+            }
             return Ok(production);
         }
 

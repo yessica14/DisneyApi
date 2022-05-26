@@ -10,7 +10,7 @@ namespace Alkemy.Disney.Api.Data.Context
     public class MVCContext :DbContext
     {
         public DbSet<User> User { get; set; }
-        public DbSet<Personage> Personage { get; set; }
+        public DbSet<Character> Character { get; set; }
         public DbSet<Production> Production { get; set; }
         public DbSet<Gender> Gender { get; set; }
 

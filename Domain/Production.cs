@@ -20,6 +20,6 @@ namespace Alkemy.Disney.Api.Domain
         public Qualification qualification { get; set; }
         public TypeProduction TypeProduction { get; set; }
         public ICollection<Gender> Gender { get; set; }
-        public ICollection<Personage> Personages { get; set; }
+        public ICollection<Character> Characters { get; set; }
     }
 }

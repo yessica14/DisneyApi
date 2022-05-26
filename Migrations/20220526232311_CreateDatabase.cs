@@ -8,7 +8,7 @@ namespace Alkemy.Disney.Api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Personage",
+                name: "Character",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -21,7 +21,7 @@ namespace Alkemy.Disney.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Personage", x => x.Id);
+                    table.PrimaryKey("PK_Character", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,6 +57,30 @@ namespace Alkemy.Disney.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CharacterProduction",
+                columns: table => new
+                {
+                    CharactersId = table.Column<int>(type: "int", nullable: false),
+                    ProductionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacterProduction", x => new { x.CharactersId, x.ProductionId });
+                    table.ForeignKey(
+                        name: "FK_CharacterProduction_Character_CharactersId",
+                        column: x => x.CharactersId,
+                        principalTable: "Character",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CharacterProduction_Production_ProductionId",
+                        column: x => x.ProductionId,
+                        principalTable: "Production",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Gender",
                 columns: table => new
                 {
@@ -77,54 +101,30 @@ namespace Alkemy.Disney.Api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PersonageProduction",
-                columns: table => new
-                {
-                    PersonagesId = table.Column<int>(type: "int", nullable: false),
-                    ProductionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonageProduction", x => new { x.PersonagesId, x.ProductionId });
-                    table.ForeignKey(
-                        name: "FK_PersonageProduction_Personage_PersonagesId",
-                        column: x => x.PersonagesId,
-                        principalTable: "Personage",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PersonageProduction_Production_ProductionId",
-                        column: x => x.ProductionId,
-                        principalTable: "Production",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_CharacterProduction_ProductionId",
+                table: "CharacterProduction",
+                column: "ProductionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Gender_ProductionId",
                 table: "Gender",
-                column: "ProductionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersonageProduction_ProductionId",
-                table: "PersonageProduction",
                 column: "ProductionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Gender");
+                name: "CharacterProduction");
 
             migrationBuilder.DropTable(
-                name: "PersonageProduction");
+                name: "Gender");
 
             migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "Personage");
+                name: "Character");
 
             migrationBuilder.DropTable(
                 name: "Production");
