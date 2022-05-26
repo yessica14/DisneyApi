@@ -17,7 +17,7 @@ namespace Alkemy.Disney.Api.Application.Dto
         public int Qualification { get; set; }
         public string TypeProduction { get; set; }
         public ICollection<GenderDTO> Genders { get; set; }
-        public ICollection<PersonageDTO> Personages { get; set; }
+        public ICollection<CharacterDTO> Personages { get; set; }
 
     }
 }

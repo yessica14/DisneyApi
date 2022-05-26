@@ -17,8 +17,8 @@ namespace Alkemy.Disney.Api.Application.Services.DefaultDI
             services.AddTransient<IProductionRepository, ProductionRepository>();
             services.AddTransient<IGenderService, GenderService>();
             services.AddTransient<IGenderRepository, GenderRepository>();
-            services.AddTransient<IPersonageService, PersonajeService>();
-            services.AddTransient<IPersonageRepository, PersonageRepository>();
+            services.AddTransient<ICharacterService, CharacterService>();
+            services.AddTransient<ICharacterRepository, CharacterRepository>();
 
             return services;
         }

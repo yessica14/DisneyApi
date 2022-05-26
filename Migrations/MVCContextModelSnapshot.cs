@@ -19,31 +19,7 @@ namespace Alkemy.Disney.Api.Migrations
                 .HasAnnotation("ProductVersion", "5.0.16")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Alkemy.Disney.Api.Domain.Gender", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("image");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<int>("ProductionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductionId");
-
-                    b.ToTable("Gender");
-                });
-
-            modelBuilder.Entity("Alkemy.Disney.Api.Domain.Personage", b =>
+            modelBuilder.Entity("Alkemy.Disney.Api.Domain.Character", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,7 +45,31 @@ namespace Alkemy.Disney.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Personage");
+                    b.ToTable("Character");
+                });
+
+            modelBuilder.Entity("Alkemy.Disney.Api.Domain.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("image");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("ProductionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductionId");
+
+                    b.ToTable("Gender");
                 });
 
             modelBuilder.Entity("Alkemy.Disney.Api.Domain.Production", b =>
@@ -121,19 +121,19 @@ namespace Alkemy.Disney.Api.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("PersonageProduction", b =>
+            modelBuilder.Entity("CharacterProduction", b =>
                 {
-                    b.Property<int>("PersonagesId")
+                    b.Property<int>("CharactersId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductionId")
                         .HasColumnType("int");
 
-                    b.HasKey("PersonagesId", "ProductionId");
+                    b.HasKey("CharactersId", "ProductionId");
 
                     b.HasIndex("ProductionId");
 
-                    b.ToTable("PersonageProduction");
+                    b.ToTable("CharacterProduction");
                 });
 
             modelBuilder.Entity("Alkemy.Disney.Api.Domain.Gender", b =>
@@ -147,11 +147,11 @@ namespace Alkemy.Disney.Api.Migrations
                     b.Navigation("Production");
                 });
 
-            modelBuilder.Entity("PersonageProduction", b =>
+            modelBuilder.Entity("CharacterProduction", b =>
                 {
-                    b.HasOne("Alkemy.Disney.Api.Domain.Personage", null)
+                    b.HasOne("Alkemy.Disney.Api.Domain.Character", null)
                         .WithMany()
-                        .HasForeignKey("PersonagesId")
+                        .HasForeignKey("CharactersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

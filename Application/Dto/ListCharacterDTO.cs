@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Alkemy.Disney.Api.Application.Dto
 {
-    public class ListarPersonageDTO
+    public class ListCharacterDTO
     {
         public byte[] Image { get; set; }
         public String Name { get; set; }
