@@ -8,6 +8,6 @@ namespace Alkemy.Disney.Api.Domain
     public enum TypeProduction
     {
         SERIE = 1,
-        FILM = 2,
+        MOVIE = 2,
     }
 }
