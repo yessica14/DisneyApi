@@ -11,12 +11,12 @@ namespace Alkemy.Disney.Api.Application.Services
     {
         List<ListCharacterDTO> getCharacter();
 
-        List<CharacterDTO> getCharacterCRUD();
-        bool SaveCharacter(Character character);
+        List<CharacterDTO> getCharacterList();
+        OperationResponseDTO SaveCharacter(CharacterDTO characterDTO);
 
-        bool UpdateCharacter(int Id, CharacterDTO character);
+        OperationResponseDTO UpdateCharacter(int Id, CharacterDTO characterDTO);
 
-        bool RemoveCharacter(int Id);
+        OperationResponseDTO RemoveCharacter(int Id);
 
         CharacterDTO GetCharacterByName(string Name);
 

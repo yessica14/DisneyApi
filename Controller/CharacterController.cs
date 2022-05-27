@@ -28,31 +28,26 @@ namespace Alkemy.Disney.Api.Controller
 
         [HttpPost("CharacterPost")]
         [Authorize]
-        public async Task<IActionResult> Post(Character character)
+        public async Task<IActionResult> Post(CharacterDTO characterDTO)
         {
-            var characterExist = _characterService.SaveCharacter(character);
-            if (characterExist)
-                return NotFound();
-            return Ok(characterExist);
+            var operation = _characterService.SaveCharacter(characterDTO);
+            return Ok(operation);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePersonage(int id, CharacterDTO character)
+        [Authorize]
+        public async Task<IActionResult> UpdatePersonage(int id, CharacterDTO characterDTO)
         {
-            var characterExist = _characterService.UpdateCharacter(id, character);
-            if (!characterExist)
-                return NotFound();
-            return NoContent();
+            var operation = _characterService.UpdateCharacter(id, characterDTO);
+            return Ok(operation);
         }
 
         [HttpDelete("character/{Id}")]
         [Authorize]
         public async Task<IActionResult> Delete(int Id)
         {
-            var characterExist = _characterService.RemoveCharacter(Id);
-            if (characterExist)
-                return NotFound();
-            return Ok(characterExist);
+            var operation = _characterService.RemoveCharacter(Id);
+            return Ok(operation);
         }
 
         [HttpGet("charactern/{Name}")]

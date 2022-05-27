@@ -1,6 +1,7 @@
 ﻿using Alkemy.Disney.Api.Application.Dto;
 using Alkemy.Disney.Api.Data.Repositories;
 using Alkemy.Disney.Api.Domain;
+using Alkemy.Disney.Api.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Alkemy.Disney.Api.Application.Services
         }
         public List<ListCharacterDTO> getCharacter()
         {
-            var characters = _characterRepository.GetCharacter();
+            var characters = _characterRepository.GetCharacterList();
 
             var listCharacterDto = new List<ListCharacterDTO>();
 
@@ -32,84 +33,119 @@ namespace Alkemy.Disney.Api.Application.Services
             return listCharacterDto;
         }
 
-        public List<CharacterDTO> getCharacterCRUD()
+        public List<CharacterDTO> getCharacterList()
         {
-            var personages = _characterRepository.GetCharacter();
+            var personages = _characterRepository.GetCharacterList();
 
             var listCharacterDto = new List<CharacterDTO>();
 
             foreach (var personage in personages)
             {
-                listCharacterDto.Add(new CharacterDTO
-                {
-                    Id = personage.Id,
-                    //Image = personage.Image,
-                    Name = personage.Name,
-                    Age = personage.Age,
-                    Weight = personage.Weight,
-                    History = personage.History
-                }); ;
+                listCharacterDto.Add(Mapping.ConvertCharacterToDto(personage));
             }
             return listCharacterDto;
         }
 
-        public bool SaveCharacter(Character character)
+        public OperationResponseDTO SaveCharacter(CharacterDTO characterDTO)
         {
-            bool characterExist = false;
-            var characters = getCharacterCRUD();
-            var newcharacter = characters.Where(x => x.Id == character.Id).FirstOrDefault();
-
-            if (newcharacter == null)
+            var operation = new OperationResponseDTO();
+           
+            try
             {
-                _characterRepository.SaveCharacter(character);
-            }
-            else
-                characterExist = true;
+                var character = _characterRepository.getCharacterByName(characterDTO.Name);
 
-            return characterExist;
+                if (character == null)
+                {
+                    _characterRepository.SaveCharacter(Mapping.ConvertDtoToCharacter(characterDTO));
+                    operation.CompletedOperation = true;
+                }
+                else
+                {
+                    operation.CompletedOperation = false;
+                    operation.Detail = $"No se puede guardar porque ya existe un personaje con el nombre {characterDTO.Name}";
+                }
+            }
+            catch(Exception e)
+            {
+                operation.CompletedOperation = false;
+                operation.Detail = e.Message;
+            }
+            
+            return operation;
         }
 
-        public bool UpdateCharacter(int Id, CharacterDTO personageDTO)
+        public OperationResponseDTO UpdateCharacter(int Id, CharacterDTO characterDTO)
         {
-            bool characterExist = false;
-            //var personages = getPersonageCRUD();
-            var characters = _characterRepository.GetCharacter();
-            var character = characters.Where(x => x.Id == Id).FirstOrDefault();
-
-            if (character != null)
+            var operation = new OperationResponseDTO();
+            try
             {
-                //
-                _characterRepository.UpdateCharacter(character);
+                var character = _characterRepository.getCharacterById(characterDTO.Id);
+                if (character != null)
+                {
+                    //Image = characterdto.Image,
+                    character.Name = characterDTO.Name;
+                    character.Age = characterDTO.Age;
+                    character.Weight = characterDTO.Weight;
+                    character.History = characterDTO.History;
+
+                    _characterRepository.UpdateCharacter(character);
+
+                    operation.CompletedOperation = true;
+                }
+                else
+                {
+                    operation.CompletedOperation = false;
+                    operation.Detail = $"No se puede realizar la actualizacion porque aun no existe el personaje con este nombre {characterDTO.Name} por favor dirigase a guardar";
+                }
             }
-            else
-                characterExist = true;
-            return characterExist;
+            catch(Exception e)
+            {
+                operation.CompletedOperation = false;
+                operation.Detail = e.Message;
+            }
+            return operation;
         }
-        public bool RemoveCharacter(int Id)
+        public OperationResponseDTO RemoveCharacter(int Id)
         {
-            bool characterExist = false;
-            var characters = getCharacterCRUD();
-            var newCharacter = characters.Where(x => x.Id == Id).FirstOrDefault();
+            var operation = new OperationResponseDTO();
+            try
+            {
+                var character = _characterRepository.getCharacterById(Id);
 
-            if (newCharacter != null)
-                _characterRepository.RemoveCharacter(Id);
-            else
-                characterExist = true;
-
-            return characterExist;
+                if (character != null)
+                {
+                    _characterRepository.RemoveCharacter(Id);
+                    operation.CompletedOperation = true;
+                }
+                else
+                {
+                    operation.CompletedOperation = false;
+                    operation.Detail = $"No se puede eliminar el personaje porque no existe un personaje con este {Id} ";
+                }
+            }
+            catch (Exception e)
+            {
+                operation.CompletedOperation = false;
+                operation.Detail = e.Message;
+            }
+            return operation;
         }
         public CharacterDTO GetCharacterByName(string Name)
         {
-            var characters = getCharacterCRUD();
-            var characterFound = characters.Where(x => x.Name == Name).FirstOrDefault();
-            return characterFound;
+            Object characterdto = null;
+            var character = _characterRepository.getCharacterByName(Name);
+            if (character != null)
+                characterdto = Mapping.ConvertCharacterToDto(character);
+            return (CharacterDTO)characterdto;
         }
 
         public CharacterDTO GetCharacterByAge(int Age)
         {
-            var characters = getCharacterCRUD();
-            var characterFound = characters.Where(x => x.Age == Age).FirstOrDefault();
-            return characterFound;
+            Object characterdto = null;
+            var character = _characterRepository.getCharacterByAge(Age);
+            if (character != null)
+                characterdto = Mapping.ConvertCharacterToDto(character);
+            return (CharacterDTO)characterdto;
         }
     }
 }
