@@ -16,7 +16,7 @@ namespace Alkemy.Disney.Api.Data.Repositories
         {
             _context = context;
         }
-        public List<Character> GetCharacter()
+        public List<Character> GetCharacterList()
         {
             var personages = _context.Character.ToList();
             return personages;
@@ -27,11 +27,36 @@ namespace Alkemy.Disney.Api.Data.Repositories
             _context.Character.Add(character);
             _context.SaveChanges();
         }
+        public Character getCharacterById(int Id)
+        {
+            var character = _context.Character.Where(x => x.Id == Id).FirstOrDefault();
+            return character;
+        }
+        public Character getCharacterByName(string Name)
+        {
+            var character = _context.Character.Where(x => x.Name == Name).FirstOrDefault();
+            return character;
+        }
+        public Character getCharacterByAge(int Age)
+        {
+            var character = _context.Character.Where(x => x.Age == Age).FirstOrDefault();
+            return character;
+        }
 
         public void UpdateCharacter(Character character)
         {
-            _context.Entry(character).State = EntityState.Modified;
-            _context.SaveChanges();
+            try
+            {
+                _context.Character.Attach(character);
+                _context.Entry(character).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            //_context.Character.Update(character);
+            
         }
 
         public void RemoveCharacter(int Id)

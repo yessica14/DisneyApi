@@ -42,5 +42,20 @@ namespace Alkemy.Disney.Api.Data.Repositories
             }
         }
 
+        public void UpdateProduction(Production production)
+        {
+            try
+            {
+                _context.Entry(production).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            //_context.Character.Update(character);
+
+        }
+
     }
 }

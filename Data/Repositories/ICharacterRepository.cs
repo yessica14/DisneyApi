@@ -8,11 +8,13 @@ namespace Alkemy.Disney.Api.Data.Repositories
 {
     public interface ICharacterRepository
     {
-        List<Character> GetCharacter();
-
+        List<Character> GetCharacterList();
         void SaveCharacter(Character character);
-
+        Character getCharacterById(int Id);
+        Character getCharacterByName(string Name);
+        Character getCharacterByAge(int Age);
         void UpdateCharacter(Character character);
         void RemoveCharacter(int Id);
+
     }
 }
