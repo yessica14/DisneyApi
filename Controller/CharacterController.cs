@@ -54,10 +54,10 @@ namespace Alkemy.Disney.Api.Controller
         [Authorize]
         public async Task<IActionResult> GetCharacterByName(string Name)
         {
-            var chara = _characterService.GetCharacterByName(Name);
-            if (chara == null)
+            var character = _characterService.GetCharacterByName(Name);
+            if (character == null)
                 return NotFound();
-            return Ok(chara);
+            return Ok(character);
         }
 
         [HttpGet("character/{Age}")]
