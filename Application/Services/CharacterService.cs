@@ -133,7 +133,7 @@ namespace Alkemy.Disney.Api.Application.Services
         public CharacterDTO GetCharacterByName(string Name)
         {
             Object characterdto = null;
-            var character = _characterRepository.getCharacterByName(Name);
+            var character = _characterRepository.getCharacterByName(Name.ToLower());
             if (character != null)
                 characterdto = Mapping.ConvertCharacterToDto(character);
             return (CharacterDTO)characterdto;
