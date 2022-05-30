@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 
 namespace Alkemy.Disney.Api.Application.Dto
 {
-    public class GenderDTO
+    public class CharacterPostDTO
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Image { get; set; }
-       
     }
 }

@@ -1,4 +1,5 @@
-﻿using Alkemy.Disney.Api.Application.Services;
+﻿using Alkemy.Disney.Api.Application.Dto;
+using Alkemy.Disney.Api.Application.Services;
 using Alkemy.Disney.Api.Data.Context;
 using Alkemy.Disney.Api.Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Alkemy.Disney.Api.Controller
 {
-   [ApiController]
+    [ApiController]
     public class ProductionController : ControllerBase
     {
         private IProductionService _productionService;
@@ -26,37 +27,57 @@ namespace Alkemy.Disney.Api.Controller
             var productions = _productionService.GetMovieDtoList();
             return Ok(productions);
         }
-        //[HttpPost]
-        //[Authorize]
-        //public async Task<IActionResult> Post(Production production)
-        //{
-        //    //var newProduction = new Production();
-        //    //newProduction.Id = production.Id;
-        //    //newProduction.Image = production.Image
-        //    _productionService.CreateProduction(production);
 
-        //    var productions = _productionService.GetMovieDtoList();
-        //    return Ok(productions);
-        //}
+        [HttpGet("GetProduccionById")]
+        [Authorize]
+        public async Task<IActionResult> GetProduccionById(int Id)
+        {
+            var production = _productionService.GetDetailProductionById(Id);
+            return Ok(production);
+        }
+
+        [HttpPost("MoviePost")]
+        [Authorize]
+        public async Task<IActionResult> PostMovie(ProductionPostDTO production)
+        {
+            var operation = _productionService.SaveProduction(production);
+            return Ok(operation);
+        }
+
+        [HttpPut("productionPut/{id}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateProduction(int id, ProductionUpdateDTO productionDTO)
+        {
+            var operation = _productionService.UpdateProduction(id, productionDTO);
+            return Ok(operation);
+        }
+
+        [HttpDelete("production/{Id}")]
+        [Authorize]
+        public async Task<IActionResult> ProductionDelete(int Id)
+        {
+            var operation = _productionService.RemoveProduction(Id);
+            return Ok(operation);
+        }
 
         [HttpGet("movies/{Name}")]
         [Authorize]
 
         public async Task<IActionResult> Get(string Name)
         {
-            var productions = _productionService.GetMovieByTitle(Name);
-            if (productions == null)
+            var production = _productionService.GetMovieByTitle(Name.ToUpper());
+            if (production == null)
             {
                 return NotFound();
             }
             else
-                return Ok(productions);
+                return Ok(production);
         }
 
         [HttpGet("{genre}")]
         [Authorize]
 
-        public async Task<IActionResult> GetGenero(string genre)
+        public async Task<IActionResult> GetGenero(int genre)
         {
             var production = _productionService.GetMovieByGender(genre);
             if (production == null)

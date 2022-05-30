@@ -12,9 +12,11 @@ namespace Alkemy.Disney.Api.Data.Repositories
         void SaveCharacter(Character character);
         Character getCharacterById(int Id);
         Character getCharacterByName(string Name);
-        Character getCharacterByAge(int Age);
+        List<Character> getCharacterByAge(int Age);
         void UpdateCharacter(Character character);
         void RemoveCharacter(int Id);
+        List<Character> GetCharacterToListCharacter(List<Character> characters);
+        List<Character> GetCharacterToListCharacter(List<int> characters);
 
     }
 }

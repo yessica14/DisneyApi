@@ -9,10 +9,14 @@ namespace Alkemy.Disney.Api.Application.Services
 {
     public interface IProductionService 
     {
-        List<ProductionDTO> GetMovieDtoList();
-        void CreateProduction(Production production);
-        List<ProductionDTO> GetMovieByTitle(string Name);
-        List<ProductionDTO> GetMovieByGender(string Name);
+        List<ListProductionDTO> GetMovieDtoList();
+        ProductionDTO GetDetailProductionById(int Id);
+        OperationResponseDTO SaveProduction(ProductionPostDTO productiondto);
+
+        OperationResponseDTO UpdateProduction(int id, ProductionUpdateDTO productionDTO);
+        OperationResponseDTO RemoveProduction(int Id);
+        List<ListProductionDTO> GetMovieByTitle(string Name);
+        List<ListProductionDTO> GetMovieByGender(int genero);
         string GetDescription(Enum value);
     }
 }

@@ -62,12 +62,7 @@ namespace Alkemy.Disney.Api.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("ProductionId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductionId");
 
                     b.ToTable("Gender");
                 });
@@ -126,25 +121,29 @@ namespace Alkemy.Disney.Api.Migrations
                     b.Property<int>("CharactersId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductionId")
+                    b.Property<int>("ProductionsId")
                         .HasColumnType("int");
 
-                    b.HasKey("CharactersId", "ProductionId");
+                    b.HasKey("CharactersId", "ProductionsId");
 
-                    b.HasIndex("ProductionId");
+                    b.HasIndex("ProductionsId");
 
                     b.ToTable("CharacterProduction");
                 });
 
-            modelBuilder.Entity("Alkemy.Disney.Api.Domain.Gender", b =>
+            modelBuilder.Entity("GenderProduction", b =>
                 {
-                    b.HasOne("Alkemy.Disney.Api.Domain.Production", "Production")
-                        .WithMany("Gender")
-                        .HasForeignKey("ProductionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("GendersId")
+                        .HasColumnType("int");
 
-                    b.Navigation("Production");
+                    b.Property<int>("ProductionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GendersId", "ProductionsId");
+
+                    b.HasIndex("ProductionsId");
+
+                    b.ToTable("GenderProduction");
                 });
 
             modelBuilder.Entity("CharacterProduction", b =>
@@ -157,14 +156,24 @@ namespace Alkemy.Disney.Api.Migrations
 
                     b.HasOne("Alkemy.Disney.Api.Domain.Production", null)
                         .WithMany()
-                        .HasForeignKey("ProductionId")
+                        .HasForeignKey("ProductionsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Alkemy.Disney.Api.Domain.Production", b =>
+            modelBuilder.Entity("GenderProduction", b =>
                 {
-                    b.Navigation("Gender");
+                    b.HasOne("Alkemy.Disney.Api.Domain.Gender", null)
+                        .WithMany()
+                        .HasForeignKey("GendersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Alkemy.Disney.Api.Domain.Production", null)
+                        .WithMany()
+                        .HasForeignKey("ProductionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -37,10 +37,10 @@ namespace Alkemy.Disney.Api.Data.Repositories
             var character = _context.Character.Where(x => x.Name == Name).FirstOrDefault();
             return character;
         }
-        public Character getCharacterByAge(int Age)
+        public List<Character> getCharacterByAge(int Age)
         {
-            var character = _context.Character.Where(x => x.Age == Age).FirstOrDefault();
-            return character;
+            var characters = _context.Character.Where(x => x.Age == Age).ToList();
+            return characters;
         }
 
         public void UpdateCharacter(Character character)
@@ -65,6 +65,32 @@ namespace Alkemy.Disney.Api.Data.Repositories
 
             _context.Character.Remove(character);
             _context.SaveChanges();
+        }
+        
+        public List<Character> GetCharacterToListCharacter(List<Character> characters)
+        {
+            var newlistCharacter = new List<Character>();
+            var listcharacter = _context.Character.ToList();
+            
+            foreach(var character in characters)
+            {
+                var characterAsign = listcharacter.Where(x => x.Id == character.Id).FirstOrDefault();
+                newlistCharacter.Add(characterAsign);
+            }
+            return newlistCharacter;
+        }
+
+        public List<Character> GetCharacterToListCharacter(List<int> characters)
+        {
+            var newlistCharacter = new List<Character>();
+            var listcharacter = _context.Character.ToList();
+
+            foreach (var character in characters)
+            {
+                var characterAsign = listcharacter.Where(x => x.Id == character).FirstOrDefault();
+                newlistCharacter.Add(characterAsign);
+            }
+            return newlistCharacter;
         }
 
     }

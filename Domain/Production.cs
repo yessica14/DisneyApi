@@ -19,7 +19,7 @@ namespace Alkemy.Disney.Api.Domain
         public DateTime CreationDate { get; set; }
         public Qualification qualification { get; set; }
         public TypeProduction TypeProduction { get; set; }
-        public ICollection<Gender> Gender { get; set; }
+        public ICollection<Gender> Genders { get; set; }
         public ICollection<Character> Characters { get; set; }
     }
 }
