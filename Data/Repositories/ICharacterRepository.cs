@@ -13,10 +13,10 @@ namespace Alkemy.Disney.Api.Data.Repositories
         Character getCharacterById(int Id);
         Character getCharacterByName(string Name);
         List<Character> getCharacterByAge(int Age);
+        List<Character> GetCharacterByIdMovie(int Id);
         void UpdateCharacter(Character character);
         void RemoveCharacter(int Id);
         List<Character> GetCharacterToListCharacter(List<Character> characters);
         List<Character> GetCharacterToListCharacter(List<int> characters);
-
     }
 }

@@ -50,7 +50,7 @@ namespace Alkemy.Disney.Api.Controller
             return Ok(operation);
         }
 
-        [HttpGet("charactern/{Name}")]
+        [HttpGet("characters/name")]
         [Authorize]
         public async Task<IActionResult> GetCharacterByName(string Name)
         {
@@ -60,11 +60,21 @@ namespace Alkemy.Disney.Api.Controller
             return Ok(character);
         }
 
-        [HttpGet("character/{Age}")]
+        [HttpGet("characters/{Age}")]
         [Authorize]
         public async Task<IActionResult> GetCharacterByAge(int Age)
         {
             var characters = _characterService.GetCharacterByAge(Age);
+            if (characters == null)
+                return NotFound();
+            return Ok(characters);
+        }
+
+        [HttpGet("characters/movie/{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetCharacterByIdMovie(int id)
+        {
+            var characters = _characterService.GetCharacterByIdMovie(id);
             if (characters == null)
                 return NotFound();
             return Ok(characters);

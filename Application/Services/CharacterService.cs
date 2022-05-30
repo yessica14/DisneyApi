@@ -5,6 +5,7 @@ using Alkemy.Disney.Api.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Alkemy.Disney.Api.Application.Services
@@ -26,7 +27,7 @@ namespace Alkemy.Disney.Api.Application.Services
             {
                 listCharacterDto.Add(new ListCharacterDTO
                 {
-                    Image = character.Image,
+                    Image = Encoding.ASCII.GetString(character.Image),
                     Name = character.Name,
                 }); ;
             }
@@ -82,7 +83,7 @@ namespace Alkemy.Disney.Api.Application.Services
                 var character = _characterRepository.getCharacterById(characterDTO.Id);
                 if (character != null)
                 {
-                    //Image = characterdto.Image,
+                    character.Image = Encoding.ASCII.GetBytes(characterDTO.Image);
                     character.Name = characterDTO.Name;
                     character.Age = characterDTO.Age;
                     character.Weight = characterDTO.Weight;
@@ -142,6 +143,13 @@ namespace Alkemy.Disney.Api.Application.Services
         public List<CharacterDTO> GetCharacterByAge(int Age)
         {
             var characters = _characterRepository.getCharacterByAge(Age);
+            var characterdtos = Mapping.ConverListCharacterToListDto(characters);
+            return characterdtos;
+        }
+
+        public List<CharacterDTO> GetCharacterByIdMovie(int Id)
+        {
+            var characters = _characterRepository.GetCharacterByIdMovie(Id);
             var characterdtos = Mapping.ConverListCharacterToListDto(characters);
             return characterdtos;
         }

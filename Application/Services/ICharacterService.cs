@@ -21,5 +21,7 @@ namespace Alkemy.Disney.Api.Application.Services
         CharacterDTO GetCharacterByName(string Name);
 
         List<CharacterDTO> GetCharacterByAge(int Age);
+
+        List<CharacterDTO> GetCharacterByIdMovie(int Id);
     }
 }

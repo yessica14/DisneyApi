@@ -17,6 +17,8 @@ namespace Alkemy.Disney.Api.Application.Services
         OperationResponseDTO RemoveProduction(int Id);
         List<ListProductionDTO> GetMovieByTitle(string Name);
         List<ListProductionDTO> GetMovieByGender(int genero);
+
+        List<ProductionDTO> SortProductionByDate(string typeOrder);
         string GetDescription(Enum value);
     }
 }

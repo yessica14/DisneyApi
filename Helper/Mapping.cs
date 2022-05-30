@@ -3,6 +3,7 @@ using Alkemy.Disney.Api.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Alkemy.Disney.Api.Helper
@@ -15,7 +16,7 @@ namespace Alkemy.Disney.Api.Helper
             var characterDto = new CharacterDTO
             {
                 Id = character.Id,
-                //Image = character.Image.ToString(),
+                Image = Encoding.ASCII.GetString(character.Image),
                 Name = character.Name,
                 Age = character.Age,
                 Weight = character.Weight,
@@ -30,7 +31,7 @@ namespace Alkemy.Disney.Api.Helper
             var character = new Character
             {
                 Id = characterdto.Id,
-                //Image = characterdto.Image,
+                Image = Encoding.ASCII.GetBytes(characterdto.Image),
                 Name = characterdto.Name,
                 Age = characterdto.Age,
                 Weight = characterdto.Weight,
@@ -42,7 +43,11 @@ namespace Alkemy.Disney.Api.Helper
 
         public static List<CharacterDTO> ConverListCharacterToListDto(List<Character> listCharacter)
         {
+            if (listCharacter == null)
+                return null;
+
             var listCharacterDto = new List<CharacterDTO>();
+
             foreach (var character in listCharacter)
             {
                 listCharacterDto.Add(ConvertCharacterToDto(character));
@@ -77,7 +82,7 @@ namespace Alkemy.Disney.Api.Helper
         {
             var productiondto = new ListProductionDTO
             {
-                //Image = production.Image.ToString(),
+                Image = Encoding.ASCII.GetString(production.Image),
                 Title = production.Title,
                 CreationDate = production.CreationDate
             };
@@ -93,7 +98,7 @@ namespace Alkemy.Disney.Api.Helper
             var productiondto = new ProductionDTO
             {
                 Id = production.Id,
-                //Image = production.Image.ToString(),
+                Image = Encoding.ASCII.GetString(production.Image),
                 Title = production.Title,
                 CreationDate = production.CreationDate,
                 Qualification = (int)production.qualification,
@@ -105,11 +110,21 @@ namespace Alkemy.Disney.Api.Helper
             return productiondto;
         }
 
-        public static Production ConvertDtoToProduction(ProductionPostDTO productiondto)
+        public static List<ProductionDTO> ConvertListProductionToListDto(List<Production> productions)
+        {
+            var listProductionsDto = new List<ProductionDTO>();
+            foreach (var prod in productions)
+            {
+                listProductionsDto.Add(ConvertProductionToDtoById(prod));
+            }
+            return listProductionsDto;
+        }
+
+            public static Production ConvertDtoToProduction(ProductionPostDTO productiondto)
         {
             var production = new Production
             {
-                //Image = production.Image.ToString(),
+                Image = Encoding.ASCII.GetBytes(productiondto.Image),
                 Title = productiondto.Title,
                 CreationDate = DateTime.Now,
                 qualification = (Qualification)productiondto.Qualification,
@@ -131,7 +146,7 @@ namespace Alkemy.Disney.Api.Helper
             {
                 Id = gender.Id,
                 Name = gender.Name,
-                Image = gender.Image.ToString()
+                Image = Encoding.ASCII.GetString(gender.Image)
             };
             return genderdto;
         }
