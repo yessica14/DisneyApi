@@ -62,7 +62,6 @@ namespace Alkemy.Disney.Api.Controller
 
         [HttpGet("movies/{Name}")]
         [Authorize]
-
         public async Task<IActionResult> Get(string Name)
         {
             var production = _productionService.GetMovieByTitle(Name.ToUpper());
@@ -76,7 +75,6 @@ namespace Alkemy.Disney.Api.Controller
 
         [HttpGet("{genre}")]
         [Authorize]
-
         public async Task<IActionResult> GetGenero(int genre)
         {
             var production = _productionService.GetMovieByGender(genre);
@@ -87,5 +85,23 @@ namespace Alkemy.Disney.Api.Controller
             return Ok(production);
         }
 
+        [HttpGet("movies/order")]
+        [Authorize]
+        public async Task<IActionResult> GetProductionOrderBy(string typeOrder)
+        {
+            typeOrder = typeOrder.ToUpper();
+            if (typeOrder == "ASC" || typeOrder == "DESC")
+            {
+                var production = _productionService.SortProductionByDate(typeOrder);
+                return Ok(production);
+            }
+            else
+            {
+                var operation = new OperationResponseDTO();
+                operation.CompletedOperation = false;
+                operation.Detail = "El parametro typeOrder debe ser ASC O DESC";
+                return Ok(operation);
+            }
+        }
     }
 }

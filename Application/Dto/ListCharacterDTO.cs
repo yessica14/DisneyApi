@@ -7,7 +7,7 @@ namespace Alkemy.Disney.Api.Application.Dto
 {
     public class ListCharacterDTO
     {
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public String Name { get; set; }
     }
 }

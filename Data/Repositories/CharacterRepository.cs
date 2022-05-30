@@ -43,6 +43,38 @@ namespace Alkemy.Disney.Api.Data.Repositories
             return characters;
         }
 
+        public List<Character> GetCharacterByIdMovie(int Id)
+        {
+            var production = _context.Production
+                .Include(x => x.Characters)
+                .Where(x => x.Id == Id)
+                .FirstOrDefault();
+            if (production == null)
+                return null;
+
+            return production.Characters.ToList();
+            /*
+            var characters = _context.Character
+                .Include(x => x.Productions)
+                .ToList();
+
+            var listcharacter = new List<Character>();
+
+            foreach(var character in characters)
+            {
+                foreach(var production in character.Productions)
+                {
+                    if(production.Id == Id)
+                    {
+                        listcharacter.Add(character);
+                    }
+                }
+            }
+
+            return listcharacter;
+            */
+        }
+
         public void UpdateCharacter(Character character)
         {
             try

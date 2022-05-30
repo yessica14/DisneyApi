@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Alkemy.Disney.Api.Application.Services
@@ -88,6 +89,7 @@ namespace Alkemy.Disney.Api.Application.Services
                 if (production != null)
                 {
                     production.Id = productiondto.Id;
+                    production.Image = Encoding.ASCII.GetBytes(productiondto.Image);
                     production.Title = productiondto.Title;
                     production.CreationDate = productiondto.CreationDate;
                     production.qualification = (Qualification)productiondto.Qualification;
@@ -161,6 +163,15 @@ namespace Alkemy.Disney.Api.Application.Services
             return listMovieDto;
         }
 
+        public List<ProductionDTO> SortProductionByDate(string typeOrder)
+        {
+            var productions = _productionRepository.SortProductionByDate(typeOrder);
+            
+            var listProductionDto = Mapping.ConvertListProductionToListDto(productions);
+
+            return listProductionDto;
+        }
+
         public string GetDescription(Enum value)
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());
@@ -171,22 +182,5 @@ namespace Alkemy.Disney.Api.Application.Services
                       attributes[0].Description :
                       value.ToString();
         }
-
-        //public void AgragarPeli(PeliculaDto peliDto)
-        //{
-        //    peliDto.fechaCarga = DateTime.Now;
-
-        //    var peli = _repoPelis.ObternerPeli(peliDto.nombre);
-        //    if (peli != null)
-        //        repo.AgregarPeli(peli);
-        //    else
-        //        msjError();
-        //}
-
-        //public void AgragarPeli(Venta venta)
-        //{
-        //    venta.Total = venta.Item1.precio + venta.Item2.precio
-        //}
-
     }
 }

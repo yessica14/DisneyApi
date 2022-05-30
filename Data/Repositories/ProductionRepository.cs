@@ -75,6 +75,24 @@ namespace Alkemy.Disney.Api.Data.Repositories
             return production;
         }
 
+        public List<Production> SortProductionByDate(string typeOrder)
+        {
+            List<Production> production = null;
+
+            if(typeOrder == "ASC")
+                production = _context.Production.OrderBy(x => x.CreationDate)
+                    .Include(x => x.Genders)
+                    .Include(x => x.Characters)
+                    .ToList();
+            else
+                production = _context.Production.OrderByDescending(x => x.CreationDate)
+                    .Include(x => x.Genders)
+                    .Include(x => x.Characters)
+                    .ToList();
+
+            return production;
+        }
+
         public void SaveMovie(Production production)
         {
             _context.Production.Add(production);
@@ -102,21 +120,6 @@ namespace Alkemy.Disney.Api.Data.Repositories
             _context.Production.Remove(production);
             _context.SaveChanges();
         }
-
-        //public void UpdateProduction(Production production)
-        //{
-        //    try
-        //    {
-        //        _context.Entry(production).State = EntityState.Modified;
-        //        _context.SaveChanges();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw;
-        //    }
-        //    //_context.Character.Update(character);
-
-        //}
 
     }
 }

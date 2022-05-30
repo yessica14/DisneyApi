@@ -16,6 +16,7 @@ namespace Alkemy.Disney.Api.Data.Repositories
         Production GetMoviesFilterByTitle(string Name);
         List<Production> GetMovieByGender(int genero);
         Production GetMovieById(int Id);
+        List<Production> SortProductionByDate(string typeOrder);
         void SaveMovie(Production production);
         void UpdateProduction(Production production);
         void RemoveProduction(int Id);
