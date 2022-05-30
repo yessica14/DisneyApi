@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Alkemy.Disney.Api.Application.Dto
 {
-    public class CharacterDTO
+    public class CharacterUpdateDTO
     {
         public int Id { get; set; }
         public string Image { get; set; }
@@ -14,7 +14,5 @@ namespace Alkemy.Disney.Api.Application.Dto
         public int Age { get; set; }
         public float Weight { get; set; }
         public string History { get; set; }
-
-       // public ICollection<ProductionDTO> Production { get; set; }
     }
 }

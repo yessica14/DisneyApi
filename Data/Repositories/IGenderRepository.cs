@@ -9,5 +9,7 @@ namespace Alkemy.Disney.Api.Data.Repositories
     public interface IGenderRepository
     {
         List<Gender> GetGender(string name);
+        List<Gender> GetGenderToListGender(List<Gender> genders);
+        List<Gender> GetGenderToListGender(List<int> genders);
     }
 }

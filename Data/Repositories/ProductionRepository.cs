@@ -13,39 +13,79 @@ namespace Alkemy.Disney.Api.Data.Repositories
     public class ProductionRepository : IProductionRepository
     {
         private readonly MVCContext _context;
-        private int isMovie = 2;
         public ProductionRepository(MVCContext context)
         {
             _context = context;
         }
+
         public List<Production> GetMovies()
         {
-            var productions =  _context.Production.ToList();
+            var productions = _context.Production.Where(x => x.TypeProduction == TypeProduction.MOVIE).ToList();
             return productions;
+        }
+
+        public Production GetDetailProductionById(int Id)
+        {
+            var production = _context.Production
+                 .Include(x => x.Genders)
+                 .Include(x => x.Characters)
+                 .Where(x => x.Id == Id)
+                 .FirstOrDefault();
+
+            return production;
+        }
+
+        public List<Production> GetSerie()
+        {
+            var productions = _context.Production.Where(x => x.TypeProduction == TypeProduction.SERIE).ToList();
+            return productions;
+        }
+
+        public List<Production> GetMoviesByTitle(string Name)
+        {
+            var productions = _context.Production.Where(x => x.Title.Contains(Name)).ToList();
+            return productions;
+        }
+
+        public Production GetMoviesFilterByTitle(string Name)
+        {
+            var production = _context.Production.Where(x => x.Title == Name).FirstOrDefault();
+            return production;
+        }
+
+        public List<Production> GetMovieByGender(int idGenero)
+        {
+            var productions = _context.Production
+                .Include(x => x.Genders);
+
+            var listProduction = new List<Production>();
+
+            foreach (var prod in productions)
+            {
+                if (prod.Genders.Any(x => x.Id == idGenero))
+                    listProduction.Add(prod);
+            }
+            
+            return listProduction;
+        }
+
+        public Production GetMovieById(int Id)
+        {
+            var production = _context.Production.Where(x => x.Id == Id).FirstOrDefault();
+            return production;
         }
 
         public void SaveMovie(Production production)
         {
-            var existproduction = _context.Production.Where(x => x.Title == production.Title).FirstOrDefault();
-            
-            if(existproduction == null)
-            {
-                var newProduction = new Production();
-                isMovie = (int)newProduction.TypeProduction;
-                newProduction.TypeProduction = (TypeProduction)isMovie;
-                newProduction.Id = production.Id;
-                newProduction.Image = production.Image;
-                newProduction.Title = production.Title;
-                newProduction.CreationDate = production.CreationDate;
-                newProduction.qualification = production.qualification;
-                _context.Production.Add(newProduction);
-            }
+            _context.Production.Add(production);
+            _context.SaveChanges();
         }
 
         public void UpdateProduction(Production production)
         {
             try
             {
+                _context.Production.Attach(production);
                 _context.Entry(production).State = EntityState.Modified;
                 _context.SaveChanges();
             }
@@ -53,9 +93,30 @@ namespace Alkemy.Disney.Api.Data.Repositories
             {
                 throw;
             }
-            //_context.Character.Update(character);
-
         }
+
+        public void RemoveProduction(int Id)
+        {
+            var production = _context.Production.Where(x => x.Id == Id).FirstOrDefault();
+
+            _context.Production.Remove(production);
+            _context.SaveChanges();
+        }
+
+        //public void UpdateProduction(Production production)
+        //{
+        //    try
+        //    {
+        //        _context.Entry(production).State = EntityState.Modified;
+        //        _context.SaveChanges();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw;
+        //    }
+        //    //_context.Character.Update(character);
+
+        //}
 
     }
 }

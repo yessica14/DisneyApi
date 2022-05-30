@@ -26,8 +26,7 @@ namespace Alkemy.Disney.Api.Application.Services
                 {
                     Id = gender.Id,
                     Name = gender.Name,
-                    Image = gender.Image,
-                    ProductionId = gender.ProductionId
+                    Image = gender.Image.ToString()
                 });
             }
             return listGenderDto.ToList();

@@ -21,5 +21,35 @@ namespace Alkemy.Disney.Api.Data.Repositories
             var gender = genders.Where(x => x.Name == name).ToList();
             return gender;
         }
+
+        public List<Gender> GetGenderToListGender(List<Gender> genders)
+        {
+            var listGender = new List<Gender>();
+            var gendersDb = _context.Gender.ToList();
+
+            foreach (var gen in genders)
+            {
+                var g = gendersDb.Where(x => x.Id == gen.Id).FirstOrDefault();
+                if(g != null)
+                    listGender.Add(g);
+            }
+
+            return listGender;
+        }
+
+        public List<Gender> GetGenderToListGender(List<int> genders)
+        {
+            var listGender = new List<Gender>();
+            var gendersDb = _context.Gender.ToList();
+
+            foreach (var gen in genders)
+            {
+                var g = gendersDb.Where(x => x.Id == gen).FirstOrDefault();
+                if (g != null)
+                    listGender.Add(g);
+            }
+
+            return listGender;
+        }
     }
 }

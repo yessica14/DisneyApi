@@ -21,6 +21,6 @@ namespace Alkemy.Disney.Api.Domain
 
         [StringLength(600)]
         public string History { get; set; }
-        public ICollection<Production> Production { get; set; }
+        public ICollection<Production> Productions { get; set; }
     }
 }

@@ -34,9 +34,9 @@ namespace Alkemy.Disney.Api.Controller
             return Ok(operation);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("characterPut/{id}")]
         [Authorize]
-        public async Task<IActionResult> UpdatePersonage(int id, CharacterDTO characterDTO)
+        public async Task<IActionResult> UpdateCharacter(int id, CharacterDTO characterDTO)
         {
             var operation = _characterService.UpdateCharacter(id, characterDTO);
             return Ok(operation);
@@ -54,7 +54,7 @@ namespace Alkemy.Disney.Api.Controller
         [Authorize]
         public async Task<IActionResult> GetCharacterByName(string Name)
         {
-            var character = _characterService.GetCharacterByName(Name);
+            var character = _characterService.GetCharacterByName(Name.ToUpper());
             if (character == null)
                 return NotFound();
             return Ok(character);
@@ -64,10 +64,10 @@ namespace Alkemy.Disney.Api.Controller
         [Authorize]
         public async Task<IActionResult> GetCharacterByAge(int Age)
         {
-            var character = _characterService.GetCharacterByAge(Age);
-            if (character == null)
+            var characters = _characterService.GetCharacterByAge(Age);
+            if (characters == null)
                 return NotFound();
-            return Ok(character);
+            return Ok(characters);
         }
     }
 }
