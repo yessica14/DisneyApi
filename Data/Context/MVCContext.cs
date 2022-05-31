@@ -1,5 +1,6 @@
 ﻿using Alkemy.Disney.Api.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Alkemy.Disney.Api.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connection = @"Server=DESKTOP-3K98E93;Database=DisneyDB;Trusted_Connection=True";
+            var connection = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("ConnectionStrings")["DefaultConnection"];
             optionsBuilder.UseSqlServer(connection);
         }
     }

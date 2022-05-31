@@ -1,0 +1,36 @@
+ALKEMY
+
+PROYECTO Alkemy.Disney.API
+
+CONFIGURACION PARA HACER FUNCIONAR LA API
+
+1- clonar repositorio
+
+2- abrir proyecto
+
+3- modificar el appsetting.json para referenciar al servidor de su maquina
+
+4- Update-Database
+
+5- (Opcional) Ejecutar en SQL Server -> DisneyDB el script "SciptDeDisneyDB" proporcionado en la carpeta "Documentacion"
+
+6- Crear un usuario en siguiente endpoint "User -> Post -> /User"
+Ejemplo:
+{
+  "id": 0,
+  "userName": "yessica",
+  "password": "1234",
+  "confirmaClave": "1234",
+  "sal": ""
+}
+
+7- Autenticarse con el usuario creado en el siguiente endpoint "Login -> Post -> /Login" y copiar el Token generado por ese endpoint
+Ejemplo:
+{
+  "userName": "yessica",
+  "password": "1234"
+}
+
+8- Abrir la seccion "Authorize" y colocar el token generado en el paso 7
+
+Listo! Ahora puedes probar todos los endpoint
