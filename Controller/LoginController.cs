@@ -33,7 +33,7 @@ namespace Alkemy.Disney.Api.Controller
 
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost()]
         public async Task<IActionResult> Post(Login Login)
         {
             if (!ModelState.IsValid)

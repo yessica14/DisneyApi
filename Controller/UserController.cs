@@ -46,7 +46,7 @@ namespace Alkemy.Disney.Api.Controller
             return Ok(Usuarios);
         }
 
-        [HttpPost]
+        [HttpPost("auth/register")]
         public async Task<IActionResult> Post(User user)
         {
             if (!ModelState.IsValid)
